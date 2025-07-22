@@ -9,18 +9,5 @@
     <h1 class="font-bold text-4xl">Onsens</h1>
   </div>
 
-  <div id="onsens" class="min-w-full divide-y divide-gray-200 space-y-5">
-    <% if @onsens.any? %>
-      <% @onsens.each do |onsen| %>
-        <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
-          <%= render onsen %>
-          <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
-            <%= link_to "Show", onsen, class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-          </div>
-        </div>
-      <% end %>
-    <% else %>
-      <p class="text-center my-10">No onsens found.</p>
-    <% end %>
-  </div>
+  <div data-controller="map" data-map-target="container" data-map-onsens="<%= h @onsens.to_json(only: [:id, :name, :geo_lat, :geo_lng]) %>" style="width: 100%; height: 500px;"></div>
 </div>
