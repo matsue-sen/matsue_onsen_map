@@ -11,7 +11,7 @@ class OnsensTest < ApplicationSystemTestCase
   end
 
   test "should create onsen" do
-    visit onsens_url
+    visit admin_onsens_url
     click_on "New onsen"
 
     fill_in "Description", with: @onsen.description
@@ -26,7 +26,7 @@ class OnsensTest < ApplicationSystemTestCase
   end
 
   test "should update Onsen" do
-    visit onsen_url(@onsen)
+    visit admin_onsen_url(@onsen)
     click_on "Edit this onsen", match: :first
 
     fill_in "Description", with: @onsen.description
@@ -41,7 +41,7 @@ class OnsensTest < ApplicationSystemTestCase
   end
 
   test "should destroy Onsen" do
-    visit onsen_url(@onsen)
+    visit admin_onsen_url(@onsen)
     accept_confirm { click_on "Destroy this onsen", match: :first }
 
     assert_text "Onsen was successfully destroyed"

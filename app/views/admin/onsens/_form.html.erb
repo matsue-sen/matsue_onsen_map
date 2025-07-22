@@ -1,4 +1,4 @@
-<%= form_with(model: onsen, class: "contents") do |form| %>
+<%= form_with(model: [:admin, @onsen], class: "contents") do |form| %>
   <% if onsen.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
       <h2><%= pluralize(onsen.errors.count, "error") %> prohibited this onsen from being saved:</h2>
