@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :onsens, only: %i[ index show ]
+  resources :onsens, only: %i[ index show ] do
+    resources :reviews, only: %i[ create new ]
+  end
 
   namespace :admin do
     root "onsens#index"

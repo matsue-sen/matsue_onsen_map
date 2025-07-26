@@ -1,0 +1,9 @@
+<div>
+  <div class="text-sm text-gray-500 ml-4">
+    <time datetime="<%= review.created_at.iso8601 %>" title="<%= l(review.created_at, format: :long) %>">
+      <%= time_ago_in_words(review.created_at) %>前
+    </time>
+  </div>
+  <%= review.rating %>
+  <%= review.comment %>
+</div>

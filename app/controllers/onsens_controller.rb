@@ -7,6 +7,7 @@ class OnsensController < ApplicationController
 
   # GET /onsens/1 or /onsens/1.json
   def show
+    @reviews = @onsen.reviews.order(created_at: :desc)
   end
 
   private
