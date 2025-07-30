@@ -1,11 +1,20 @@
-<% content_for :title, "Showing onsen" %>
-<div class="md:w-2/3 w-full">
+<% content_for :title, '温泉詳細' %>
+<div class="max-w-2xl w-full mx-auto py-8">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-600 font-medium rounded-md text-center" id="notice"><%= notice %></p>
   <% end %>
-  <h1 class="font-bold text-4xl">Showing onsen</h1>
-  <%= render @onsen %>
-  <%= link_to "Edit this onsen", edit_admin_onsen_path(@onsen), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <%= link_to "Back to onsens", admin_onsens_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <%= button_to "Destroy this onsen", admin_onsen_path(@onsen), method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "w-full rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+  <h1 class="font-bold text-3xl mb-6">温泉詳細</h1>
+  <%= render partial: 'onsen', locals: { onsen: @onsen } %>
+  <% if @onsen.images.attached? %>
+    <div class="flex flex-wrap gap-2 mt-4">
+      <% @onsen.images.each do |img| %>
+        <%= image_tag img.variant(resize_to_limit: [200,200]), class: "rounded shadow border w-32 h-32 object-cover", alt: @onsen.name %>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="mt-8 flex gap-2">
+    <%= link_to '編集', edit_admin_onsen_path(@onsen), class: "rounded-md px-4 py-2 bg-yellow-100 hover:bg-yellow-200 text-yellow-800 font-medium" %>
+    <%= link_to '一覧に戻る', admin_onsens_path, class: "rounded-md px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium" %>
+    <%= button_to '削除', @onsen, method: :delete, form_class: "inline-block", class: "rounded-md px-4 py-2 bg-red-600 hover:bg-red-500 text-white font-medium", data: { turbo_confirm: '本当に削除しますか？' } %>
+  </div>
 </div>

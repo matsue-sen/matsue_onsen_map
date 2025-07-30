@@ -1,6 +1,8 @@
-<% content_for :title, "New onsen" %>
-<div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">New onsen</h1>
+<% content_for :title, '温泉新規登録' %>
+<div class="max-w-2xl w-full mx-auto py-8 px-2 sm:px-4">
+  <h1 class="font-bold text-3xl mb-6">温泉新規登録</h1>
   <%= render "form", onsen: @onsen %>
-  <%= link_to "Back to onsens", admin_onsens_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <div class="mt-6 flex flex-col sm:flex-row gap-2">
+    <%= link_to '一覧に戻る', admin_onsens_path, class: "rounded-md px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium w-full sm:w-auto text-center" %>
+  </div>
 </div>
