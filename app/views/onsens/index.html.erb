@@ -3,6 +3,8 @@
   <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">
     <%= t('views.onsens.index.title') %>
   </h1>
+  <%# 検索フォーム（パーシャル分割） %>
+  <%= render 'search_form' %>
   <%# メインコンテンツ：地図 + 温泉一覧 %>
   <div class="grid lg:grid-cols-2 gap-6 min-h-[600px]">
     <%# 地図エリア（左側・デスクトップ時） %>
