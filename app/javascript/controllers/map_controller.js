@@ -10,12 +10,12 @@ export default class extends Controller {
     this.onsens = this._parseOnsensData();
     console.log(this.onsens);
 
-    var map = L.map(this.containerTarget).setView([35.468, 133.0483], 11.5);
+    this.map = L.map(this.containerTarget).setView([35.468, 133.0483], 11.5);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
+    }).addTo(this.map);
 
     const onsenIcon = L.icon({
       iconUrl: '/onsen.svg',
@@ -25,13 +25,16 @@ export default class extends Controller {
 
     this.onsens.forEach(onsen => {
       L.marker([onsen.geo_lat, onsen.geo_lng], { icon: onsenIcon })
-        .addTo(map)
+        .addTo(this.map)
         .bindPopup(onsen.name);
     });
   }
 
   disconnect() {
-    this.map.remove();
+    if (this.map) {
+      this.map.remove();
+      this.map = null;
+    }
   }
 
   // === プライベートメソッド（内部処理用） ===

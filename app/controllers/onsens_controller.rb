@@ -2,7 +2,11 @@ class OnsensController < ApplicationController
   before_action :set_onsen, only: %i[ show ]
   # GET /onsens or /onsens.json
   def index
-    @onsens = Onsen.all
+    # Strong Parametersで安全なパラメータのみ許可
+    @search_params = params.permit(:q, :tags)
+
+    # モデルの検索メソッドを呼び出し、新しい順でソート
+    @onsens = Onsen.search(@search_params).order(created_at: :desc)
   end
 
   # GET /onsens/1 or /onsens/1.json
