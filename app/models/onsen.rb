@@ -4,9 +4,9 @@ class Onsen < ApplicationRecord
   has_many_attached :images
 
   validates :images,
-    content_type: { in: [ "image/jpeg", "image/png", "image/gif" ], message: "must be a JPEG, PNG, or GIF" },
-    size: { less_than: 5.megabytes, message: "must be less than 5MB" },
-    limit: { max: 5, message: "cannot exceed 5 images" }
+  content_type: [ "image/jpeg", "image/png", "image/gif" ], # 許可ファイル形式
+  size: { less_than: 5.megabytes },                       # 1枚あたり5MB未満
+  limit: { max: 5 }                                     # 最大3枚まで
 
 
   # @example Onsen.search(q: "玉造", tags: "露天風呂", lat: 35.1, lng: 132.5, radius_km: 10)

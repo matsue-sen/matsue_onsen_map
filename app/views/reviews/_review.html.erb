@@ -1,9 +1,44 @@
-<div>
-  <div class="text-sm text-gray-500 ml-4">
-    <time datetime="<%= review.created_at.iso8601 %>" title="<%= l(review.created_at, format: :long) %>">
-      <%= time_ago_in_words(review.created_at) %>前
-    </time>
+<article class="review-item bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-200"
+         id="review-<%= review.id %>">
+
+  <header class="flex items-start justify-between mb-3">
+    <div class="flex items-center space-x-2">
+      <% review.rating.times do %>
+        <span class="text-yellow-400">★</span>
+      <% end %>
+      <% (5 - review.rating).times do %>
+        <span class="text-gray-300">★</span>
+      <% end %>
+      <span class="text-sm font-medium text-gray-700 ml-2">
+        <%= review.rating %>/5
+      </span>
+    </div>
+
+    <div class="text-sm text-gray-500">
+      <time datetime="<%= review.created_at.iso8601 %>">
+        <%= time_ago_in_words(review.created_at) %>
+      </time>
+    </div>
+  </header>
+
+  <div class="review-content">
+    <% if review.comment.present? %>
+      <div class="text-gray-700 leading-relaxed mb-3">
+        <%= simple_format(review.comment) %>
+      </div>
+    <% end %>
+
+    <% if review.images.attached? %>
+      <div class="flex flex-wrap gap-2">
+        <% review.images.each_with_index do |image, index| %>
+          <div class="w-20 h-20 overflow-hidden rounded border border-gray-200 flex-shrink-0">
+            <%= image_tag image.variant(resize_to_fill: [80, 80]),
+                class: "w-full h-full object-cover",
+                alt: "レビュー画像 #{index + 1}",
+                loading: "lazy" %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
   </div>
-  <%= review.rating %>
-  <%= review.comment %>
-</div>
+</article>
