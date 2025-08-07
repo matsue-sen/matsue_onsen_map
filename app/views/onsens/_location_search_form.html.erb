@@ -8,7 +8,7 @@
       <label for="zipcode" class="block text-sm font-bold mb-1">
         <%= t('views.onsens.index.zipcode') %>
       </label>
-      <div class="flex gap-2">
+      <div class="flex flex-col sm:flex-row gap-2">
         <input type="text"
                id="zipcode"
                name="zipcode"
@@ -20,7 +20,7 @@
                data-zipcode-target="zipcode" />
         <button type="button"
                 id="zipcode-search-btn"
-                class="px-3 py-2 bg-gray-200 rounded hover:bg-blue-100 text-sm whitespace-nowrap focus:ring-2 focus:ring-blue-500"
+                class="px-3 py-2 bg-gray-200 rounded hover:bg-blue-100 text-sm whitespace-nowrap focus:ring-2 focus:ring-blue-500 flex-shrink-0"
                 aria-label="郵便番号から住所検索"
                 data-action="click->zipcode#search">
           <%= t('views.onsens.index.zipcode_search') %>
@@ -33,7 +33,7 @@
       <label for="address" class="block text-sm font-bold mb-1">
         <%= t('views.onsens.index.address', default: '住所') %>
       </label>
-      <div class="flex gap-2">
+      <div class="flex flex-col sm:flex-row gap-2">
         <input type="text"
                id="address"
                name="address"
@@ -45,7 +45,7 @@
                data-geocode-target="address" />
         <button type="button"
                 id="geocode-search-btn"
-                class="px-3 py-2 bg-gray-200 rounded hover:bg-blue-100 text-sm whitespace-nowrap focus:ring-2 focus:ring-blue-500"
+                class="px-3 py-2 bg-gray-200 rounded hover:bg-blue-100 text-sm whitespace-nowrap focus:ring-2 focus:ring-blue-500 flex-shrink-0"
                 aria-label="<%= t('views.onsens.index.geocode_btn', default: '住所から緯度経度を取得') %>"
                 data-action="click->geocode#search">
           <%= t('views.onsens.index.geocode_btn', default: '住所→座標') %>
@@ -55,7 +55,7 @@
     </div>
   </div>
   <%# 緯度経度・半径の直接入力 %>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
     <div>
       <%= f.label :lat, t('activerecord.attributes.onsen.geo_lat'),
                    class: "block text-sm font-bold mb-1" %>
