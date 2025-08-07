@@ -9,6 +9,7 @@ class ReviewsController < ApplicationController
     if @review.save
       redirect_to onsen_path(@onsen), notice: t("flash.review_created")
     else
+      @reviews = @onsen.reviews.order(created_at: :desc)
       render "onsens/show", status: :unprocessable_entity
     end
   end

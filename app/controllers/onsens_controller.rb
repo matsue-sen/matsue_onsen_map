@@ -16,6 +16,6 @@ class OnsensController < ApplicationController
 
   private
     def set_onsen
-      @onsen = Onsen.find(params.expect(:id))
+      @onsen = Onsen.find(params[:id])
     end
 end

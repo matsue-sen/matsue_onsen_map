@@ -1,11 +1,16 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  rating: 1
-  comment: MyText
+  rating: 5
+  comment: 素晴らしい温泉でした。露天風呂からの眺めが最高です。
   onsen: one
 
 two:
-  rating: 1
-  comment: MyText
+  rating: 4
+  comment: 静かで落ち着いた雰囲気でした。また来たいです。
   onsen: two
+
+three:
+  rating: 3
+  comment: 普通の温泉でした。特に印象に残ることはありません。
+  onsen: one
