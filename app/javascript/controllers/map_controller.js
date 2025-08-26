@@ -40,15 +40,15 @@ export default class extends Controller {
   // === プライベートメソッド（内部処理用） ===
 
   /**
-   * HTML要素から温泉データを取得・パース
-   * @returns {Array} 温泉データの配列
+   * HTML要素からグルメデータを取得・パース
+   * @returns {Array} グルメデータの配列
    */
   _parseOnsensData() {
     try {
       const rawData = this.element.dataset.mapOnsens || "[]";
       return JSON.parse(rawData);
     } catch (error) {
-      console.warn("温泉データのパースに失敗:", error);
+      console.warn("グルメデータのパースに失敗:", error);
       return [];
     }
   }

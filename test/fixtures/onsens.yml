@@ -1,22 +1,22 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: 玉造温泉
+  name: 玉造グルメ
   geo_lat: 35.4681
   geo_lng: 133.0486
-  description: 島根県松江市にある美しい温泉です。露天風呂が人気です。
+  description: 島根県松江市にある美しいグルメです。露天風呂が人気です。
   tags: 露天風呂,貸切風呂,大浴場
 
 two:
-  name: 湯の川温泉
+  name: 湯の川グルメ
   geo_lat: 35.1234
   geo_lng: 132.5678
-  description: 静かな温泉地で、リラックスできる環境です。
+  description: 静かなグルメ地で、リラックスできる環境です。
   tags: 大浴場,サウナ
 
 three:
-  name: 松江温泉
+  name: 松江グルメ
   geo_lat: 35.4567
   geo_lng: 133.1234
-  description: 松江市内にある便利な温泉です。
+  description: 松江市内にある便利なグルメです。
   tags: 露天風呂,貸切風呂

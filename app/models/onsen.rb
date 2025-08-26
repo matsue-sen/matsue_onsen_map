@@ -105,7 +105,7 @@ class Onsen < ApplicationRecord
   # @param lat [Float] 基準緯度
   # @param lng [Float] 基準経度
   # @param radius [Float] 検索半径（km）
-  # @return [Array<Onsen>] 距離条件を満たす温泉配列
+  # @return [Array<Onsen>] 距離条件を満たすグルメ配列
   def self.apply_precise_distance_filter(scope, lat, lng, radius)
     scope.select do |onsen|
       DistanceCalculatorService.calculate(lat, lng, onsen.geo_lat, onsen.geo_lng) <= radius
