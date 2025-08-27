@@ -7,3 +7,4 @@ pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
 pin_all_from "app/javascript/controllers", under: "controllers"
 pin "leaflet" # @1.9.4
 pin "@geolonia/normalize-japanese-addresses", to: "@geolonia--normalize-japanese-addresses.js" # @3.1.3
+pin "glightbox" # @3.3.1
