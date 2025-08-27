@@ -13,10 +13,6 @@
     <%= form.label :name, '名称', class: 'block font-semibold mb-1' %>
     <%= form.text_field :name, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
   </div>
-  <%= form.label :address, '住所', class: 'block font-semibold mb-1' %>
-  <%= form.text_field :address, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
-  <%
-=begin %>
   <div class="flex flex-col sm:flex-row gap-4">
     <div class="flex-1">
       <%= form.label :geo_lat, '緯度', class: 'block font-semibold mb-1' %>
@@ -27,8 +23,10 @@
       <%= form.text_field :geo_lng, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
     </div>
   </div>
-  <%
-=end %>
+  <div>
+    <%= form.label :url, '温泉のリンク', class: 'block font-semibold mb-1' %>
+    <%= form.text_field :url, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
+  </div>
   <div>
     <%= form.label :description, '説明', class: 'block font-semibold mb-1' %>
     <%= form.text_area :description, rows: 4, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
@@ -36,10 +34,6 @@
   <div>
     <%= form.label :tags, 'タグ（カンマ区切り）', class: 'block font-semibold mb-1' %>
     <%= form.text_field :tags, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
-  </div>
-  <div>
-    <%= form.label :url, 'リンク（公式サイト）', class: 'block font-semibold mb-1' %>
-    <%= form.text_field :url, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600", placeholder: "任意" %>
   </div>
   <div>
     <%= form.label :images, '画像（最大5枚・JPEG/PNG/GIF）', class: 'block font-semibold mb-1' %>
