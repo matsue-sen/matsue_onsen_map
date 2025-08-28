@@ -48,6 +48,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_23_085142) do
     t.decimal "geo_lng"
     t.text "description"
     t.string "tags"
+    t.integer "fee"
+    t.time "open_hours"
+    t.time "close_hours"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
