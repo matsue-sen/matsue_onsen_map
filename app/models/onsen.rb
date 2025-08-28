@@ -10,6 +10,18 @@ class Onsen < ApplicationRecord
   size: { less_than: 5.megabytes },                       # 1枚あたり5MB未満
   limit: { max: 5 }                                     # 最大3枚まで
 
+  # 住所変換するやつ。
+  geocoded_by :address, latitude: :geo_lat, longitude: :geo_lng
+  after_validation :geocode, if: :will_save_change_to_address?
+
+  # @example Onsen.within_bounds([sw_lat, sw_lng, ne_lat, ne_lng])
+  scope :within_bounds, ->(bounds) {
+    return all if bounds.blank?
+    sw_lat, sw_lng, ne_lat, ne_lng = bounds.map(&:to_f)
+    where(geo_lat: sw_lat..ne_lat, geo_lng: sw_lng..ne_lng)
+  }
+
+
 
   # @example Onsen.search(q: "玉造", tags: "露天風呂", lat: 35.1, lng: 132.5, radius_km: 10)
   def self.search(params)
@@ -48,6 +60,39 @@ class Onsen < ApplicationRecord
     tag_query = tags.map { |_t| "tags ILIKE ?" }.join(" OR ")
     tag_values = tags.map { |t| "%#{t}%" }
     scope.where(tag_query, *tag_values)
+  end
+
+  # 価格が0円以上のみ登録可能
+  class Onsen < ApplicationRecord
+    has_many_attached :images
+    has_many :reviews
+
+    # -----------------------------
+    # ここから追加
+    # 料金の整数化（空欄は nil に）
+    before_validation :normalize_price
+
+    private
+
+    def normalize_price
+      if price.present? && price.to_s.strip != ""
+        self.price = price.to_i
+      else
+        self.price = nil
+      end
+    end
+    # ここまで追加
+    # -----------------------------
+
+    # バリデーション
+    validates :name, presence: true
+    validates :price,
+      numericality: {
+        only_integer: true,
+        greater_than: 0,
+        message: "は1円以上の整数で入力してください"
+      },
+      allow_nil: true
   end
 
   # 位置情報検索：二段階フィルタによる距離絞り込み
@@ -105,10 +150,84 @@ class Onsen < ApplicationRecord
   # @param lat [Float] 基準緯度
   # @param lng [Float] 基準経度
   # @param radius [Float] 検索半径（km）
-  # @return [Array<Onsen>] 距離条件を満たす温泉配列
+  # @return [Array<Onsen>] 距離条件を満たすグルメ配列
   def self.apply_precise_distance_filter(scope, lat, lng, radius)
     scope.select do |onsen|
       DistanceCalculatorService.calculate(lat, lng, onsen.geo_lat, onsen.geo_lng) <= radius
+    end
+  end
+
+  def open_now
+    if sales_s.blank? || sales_f.blank?
+          return "営業時間不明"
+    end
+
+    Time.zone = "Tokyo"
+    now = Time.zone.now
+    wday = %w[日 月 火 水 木 金 土][now.wday] # 現在の曜日を取得
+    # holidayが空でなく、かつその曜日が含まれていたら休業
+
+    return "休業中(定休日)" if holiday.present? && holiday.include?(wday)
+
+    now_sec   = now.hour * 3600 + now.min * 60
+    open_sec  = sales_s.to_time.hour * 3600 + sales_s.to_time.min * 60
+    close_sec = sales_f.to_time.hour * 3600 + sales_f.to_time.min * 60
+
+    if open_sec > close_sec
+      close_sec += 24 * 3600
+    end
+
+    if close_sec - now_sec <= 30.minutes && now_sec < close_sec
+      "まもなく閉店 (閉店まであと#{(close_sec - now_sec) / 60}分)"
+
+    elsif open_sec <= now_sec && now_sec <= close_sec
+      "営業中"
+
+    elsif now_sec < open_sec && open_sec - now_sec <= 30.minutes
+      "まもなく開店 (開店まであと#{(open_sec - now_sec) / 60}分)"
+
+    else
+      sales_s_time = sales_s.to_time
+      if now_sec < open_sec
+        # 今日の開店前
+        "営業時間外 (#{sales_s_time.strftime('%H:%M')} から開店)"
+      else
+        # 今日の営業は終了 → 翌日の開店まで待つ
+        "営業時間外 (明日 #{sales_s_time.strftime('%H:%M')} に開店)"
+      end
+    end
+  end
+
+  # 営業状態アイコン
+  def status_icon
+    return "close" if sales_s.blank? || sales_f.blank?
+
+    Time.zone = "Tokyo"
+    now = Time.zone.now
+
+    now_sec   = now.hour * 3600 + now.min * 60
+    open_sec  = sales_s.to_time.hour * 3600 + sales_s.to_time.min * 60
+    close_sec = sales_f.to_time.hour * 3600 + sales_f.to_time.min * 60
+
+    if open_sec > close_sec
+      close_sec += 24 * 3600
+    end
+
+    if open_sec <= now_sec && now_sec <= close_sec
+      if close_sec - now_sec <= 30.minutes
+        "close_soon"
+      else
+        "open"
+      end
+    elsif now_sec < open_sec
+      if open_sec - now_sec <= 30.minutes
+        "open_soon"
+      else
+        "close"
+      end
+    else
+      # 今日の営業終了 → 翌日の開店待ち
+      "close"
     end
   end
 end

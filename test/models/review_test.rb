@@ -3,7 +3,7 @@ require "test_helper"
 class ReviewTest < ActiveSupport::TestCase
   def setup
     @onsen = onsens(:one)
-    @review = @onsen.reviews.build(rating: 5, comment: "素晴らしい温泉でした")
+    @review = @onsen.reviews.build(rating: 5, comment: "素晴らしいグルメでした")
   end
 
   test "should be valid" do

@@ -1,4 +1,4 @@
-<%= form_with(model: [:admin, onsen || @onsen], html: { multipart: true, class: "space-y-6" }) do |form| %>
+<%= form_with model: [:admin, @onsen], local: true do |form| %>
   <% if onsen.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
       <h2><%= pluralize(onsen.errors.count, "件のエラー") %>があります:</h2>
@@ -13,15 +13,19 @@
     <%= form.label :name, '名称', class: 'block font-semibold mb-1' %>
     <%= form.text_field :name, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
   </div>
-  <div class="flex flex-col sm:flex-row gap-4">
-    <div class="flex-1">
-      <%= form.label :geo_lat, '緯度', class: 'block font-semibold mb-1' %>
-      <%= form.text_field :geo_lat, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
-    </div>
-    <div class="flex-1">
-      <%= form.label :geo_lng, '経度', class: 'block font-semibold mb-1' %>
-      <%= form.text_field :geo_lng, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
-    </div>
+  <%= form.label :address, '住所', class: 'block font-semibold mb-1' %>
+  <%= form.text_field :address, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
+  <div>
+    <%= form.label :sales_s,  '始業時間', class: 'block font-semibold mb-1' %>
+    <%= form.text_field :sales_s, class: "block shadow-sm rouded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
+  </div>
+  <div>
+    <%= form.label :sales_f,  '終業時間', class: 'block font-semibold mb-1' %>
+    <%= form.text_field :sales_f, class: "block shadow-sm rouded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
+  </div>
+  <div>
+    <%= form.label :holiday,  '定休日(カンマ区切り)', class: 'block font-semibold mb-1' %>
+    <%= form.text_field :holiday, class: "block shadow-sm rouded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
   </div>
   <div>
     <%= form.label :description, '説明', class: 'block font-semibold mb-1' %>
@@ -30,6 +34,14 @@
   <div>
     <%= form.label :tags, 'タグ（カンマ区切り）', class: 'block font-semibold mb-1' %>
     <%= form.text_field :tags, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
+  </div>
+  <div>
+    <%= form.label :price, '価格帯（円）', class: 'block font-semibold mb-1' %>
+    <%= form.number_field :price, min: 1, step: 1, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600", placeholder: "例 1500" %>
+  </div>
+  <div>
+    <%= form.label :url, 'リンク（公式サイト）', class: 'block font-semibold mb-1' %>
+    <%= form.text_field :url, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600", placeholder: "任意" %>
   </div>
   <div>
     <%= form.label :images, '画像（最大5枚・JPEG/PNG/GIF）', class: 'block font-semibold mb-1' %>

@@ -1,12 +1,36 @@
 <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm text-gray-700 break-words">
   <dt class="font-semibold">名称</dt>
   <dd><%= onsen.name %></dd>
+
+  <dt class="font-semibold">住所</dt>
+  <dd><%= onsen.address %></dd>           
+             
   <dt class="font-semibold">緯度</dt>
   <dd><%= onsen.geo_lat %></dd>
+  
   <dt class="font-semibold">経度</dt>
   <dd><%= onsen.geo_lng %></dd>
+
+  <dt class="font-semibold">URL</dt>
+  <dd><%= onsen.url %></dd>
+  
+  <dt class="font-semibold">始業時間</dt>
+  <dd><%= onsen.sales_s %></dd>
+  
+  <dt class="font-semibold">終業時間</dt>
+  <dd><%= onsen.sales_f %></dd>
+  
+  <dt class="font-semibold">営業状態</dt>
+  <dd><%= onsen.open_now %></dd>
+  
+  <dt class="font-semibold">定休日</dt>
+  <dd><%= onsen.holiday %></dd>
+  
   <dt class="font-semibold">説明</dt>
   <dd><%= onsen.description %></dd>
+
   <dt class="font-semibold">タグ</dt>
   <dd><%= onsen.tags %></dd>
+  <dt class="font-semibold">料金</dt>
+  <dd><%= onsen.price %></dd>
 </dl>

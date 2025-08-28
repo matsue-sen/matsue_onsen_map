@@ -1,23 +1,28 @@
 Rails.application.routes.draw do
-  resources :onsens, only: %i[ index show ] do
-    resources :reviews, only: %i[ create new ]
+  # 🔹 一般ユーザー向け
+  resources :onsens, only: %i[index show] do
+    resources :reviews, only: %i[create new]
   end
 
+  # 🔹 管理画面
   namespace :admin do
     root "onsens#index"
+
+    # セッション（ログイン関連）
+    get    "login",  to: "sessions#new"
+    post   "login",  to: "sessions#create"
+    delete "logout", to: "sessions#destroy"
+
     resources :onsens
   end
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # 🔹 ヘルスチェック (Rails標準)
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
+  # 🔹 PWA 関連 (コメントアウトのまま)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
-  # Defines the root path route ("/")
+  # 🔹 ルート（一般ユーザー向けTOP）
   root "onsens#index"
 end

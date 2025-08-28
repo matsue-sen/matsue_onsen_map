@@ -2,7 +2,7 @@
 
 one:
   rating: 5
-  comment: 素晴らしい温泉でした。露天風呂からの眺めが最高です。
+  comment: 素晴らしいグルメでした。露天風呂からの眺めが最高です。
   onsen: one
 
 two:
@@ -12,5 +12,5 @@ two:
 
 three:
   rating: 3
-  comment: 普通の温泉でした。特に印象に残ることはありません。
+  comment: 普通のグルメでした。特に印象に残ることはありません。
   onsen: one

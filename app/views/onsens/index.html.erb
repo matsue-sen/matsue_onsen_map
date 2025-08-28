@@ -5,32 +5,37 @@
   </h1>
   <%# 検索フォーム（パーシャル分割） %>
   <%= render 'search_form' %>
-  <%# メインコンテンツ：地図 + 温泉一覧 %>
+  <%# メインコンテンツ：地図 + グルメ一覧 %>
   <div class="grid lg:grid-cols-2 gap-6 min-h-[600px]">
     <%# 地図エリア（左側・デスクトップ時） %>
     <div class="order-2 lg:order-1">
-      <div class="relative h-96 lg:h-[600px] rounded-lg overflow-hidden shadow-lg">
-        <div data-controller="map" data-map-target="container" data-map-onsens="<%= h @onsens.to_json(only: [:id, :name, :geo_lat, :geo_lng]) %>" style="width: 100%; height: 100%;"></div>
-        <button type="button"
-                class="absolute top-3 right-3 bg-white border rounded-lg px-4 py-2 text-sm shadow-lg hover:bg-blue-50 z-10 focus:ring-2 focus:ring-blue-500"
-                data-action="click->map#locate">
-          📍 <%= t('views.onsens.index.current_location') %>
-        </button>
-      </div>
+<div data-controller="map"
+     data-map-onsens-value="<%= @onsens.to_json(only: [:id, :name, :geo_lat, :geo_lng], methods: [:status_icon]) %>"
+     class="relative h-96 lg:h-[600px] rounded-lg overflow-hidden shadow-lg">
+  <div data-map-target="container" style="z-index:1; width: 100%; height: 100%;"></div>
+
+  <button type="button"
+          class="absolute top-3 right-3 bg-white border rounded-lg px-4 py-2 text-sm shadow-lg hover:bg-blue-50 z-10 focus:ring-2 focus:ring-blue-500"
+          data-action="click->map#locateUser">
+    📍 現在地を表示
+  </button>
+</div>
+
     </div>
-    <%# 温泉一覧エリア（右側・デスクトップ時） %>
-    <div class="order-1 lg:order-2">
+    <%# グルメ一覧エリア（右側・デスクトップ時） %>
+    <div id="onsen-list" class="order-1 lg:order-2">
       <div class="space-y-4 lg:max-h-[600px] lg:overflow-y-auto lg:pr-2">
         <% if @onsens.any? %>
           <p class="text-sm text-gray-600 mb-4">
-            検索結果: <%= @onsens.count %>件の温泉が見つかりました
+            検索結果: <%= @onsens.count %>件のグルメが見つかりました
           </p>
           <% @onsens.each do |onsen| %>
+            <%# `spot_card` パーシャルは app/views/onsens/_spot_card.html.erb に存在することを前提としています %>
             <%= render partial: "spot_card", locals: { onsen: onsen } %>
           <% end %>
         <% else %>
           <div class="text-center py-8 text-gray-500">
-            <p class="text-lg mb-2">🔍 温泉が見つかりませんでした</p>
+            <p class="text-lg mb-2">🔍 グルメが見つかりませんでした</p>
             <p class="text-sm">検索条件を変更してお試しください</p>
           </div>
         <% end %>

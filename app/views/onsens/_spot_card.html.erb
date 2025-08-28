@@ -1,4 +1,4 @@
-<%# 温泉スポットカード（Atomic Design: Molecule） %>
+<%# グルメスポットカード（Atomic Design: Molecule） %>
 <%= link_to onsen_path(onsen), class: "block bg-white rounded-lg shadow-md hover:shadow-lg p-4 hover:bg-blue-50 transition-all duration-200 cursor-pointer border border-gray-100 focus:outline focus:ring-2 focus:ring-blue-400", 'aria-label': "#{onsen.name}の詳細" do %>
   <div class="flex items-start gap-4">
     <% if onsen.images.attached? %>
@@ -9,11 +9,27 @@
     <div class="flex-1 min-w-0">
       <h2 class="text-lg font-semibold mb-2 text-gray-900 truncate"><%= onsen.name %></h2>
       <div class="text-sm text-gray-600 mb-2 line-clamp-2"><%= truncate(onsen.description, length: 60) %></div>
+      
       <% if onsen.tags.present? %>
         <div class="text-xs text-gray-500 mb-2">
           <span class="font-medium">タグ:</span> <%= onsen.tags %>
         </div>
       <% end %>
+
+      <!-- mainより　 -->
+      <div><%= onsen.sales_s %> ～ <%= onsen.sales_f %></div>
+      <div>営業状況：<%= onsen.open_now %></div>
+    
+      <!-- isgikawa branch -->
+      <% if onsen.price.present? %>
+        <div class="mb-2">
+          <span class="inline-block bg-green-100 text-green-700 text-xs font-medium px-2 py-1 rounded-full">
+            ¥<%= onsen.price %>~
+          </span>
+        </div>
+      <% end %>
+
+
       <div class="flex items-center">
         <% if onsen.reviews.any? %>
           <%= render partial: "shared/rating_stars", locals: { rating: (onsen.reviews.average(:rating)&.round || 0) } %>
